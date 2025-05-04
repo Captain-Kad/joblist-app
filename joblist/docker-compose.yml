@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  joblist:
+    image: joblist:dev
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+    init: true
+    stdin_open: true
+    stop_signal: SIGINT
+    stop_grace_period: 5s
