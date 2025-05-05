@@ -1,7 +1,8 @@
 version: '3.8'
 services:
   joblist:
-    image: joblist:dev
+    build: .
+    container_name: joblist
     ports:
       - "3000:3000"
     volumes:
@@ -14,5 +15,6 @@ services:
     working_dir: /app
     init: true
     stdin_open: true
+    tty: true
     stop_signal: SIGINT
     stop_grace_period: 5s
