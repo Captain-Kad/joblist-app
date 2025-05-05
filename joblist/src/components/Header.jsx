@@ -1,18 +1,14 @@
-import { Container, Navbar } from "react-bootstrap";
+import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/Header.css'
 
 const Header = () => {
   return (
     <>
-      <div className="header">
-        <Navbar className="bg-body-tertiary">
-          <Container>
-            <Navbar.Brand>
-              <h1>Joblist</h1>
-            </Navbar.Brand>
-          </Container>
-        </Navbar>
-        <br />
+      <div className="bg-primary text-white py-3">
+        <div className="container">
+          <h1 className='fs-2 fw-bold mb-0'>Joblist</h1>
+        </div>
       </div>
     </>
   );
