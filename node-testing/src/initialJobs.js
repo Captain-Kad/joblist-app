@@ -1,0 +1,69 @@
+const initialJobs = [
+    {
+      job_id: 1,
+      title: "Frontend Developer",
+      description: "We're looking for an experienced Frontend Developer to join our team and help build amazing user interfaces.",
+      requirements: "3+ years experience with React, JavaScript, HTML/CSS",
+      job_type: "Full-time",
+      location: "San Francisco, CA",
+      salary: "$120,000 - $150,000",
+      posted_date: "2025-04-15",
+      job_category: "Development",
+      category_id: 1,
+      job_url: "https://example.com/jobs/frontend-developer"
+    },
+    {
+      job_id: 2,
+      title: "Backend Engineer",
+      description: "Join our backend team to design and implement scalable APIs and services.",
+      requirements: "Experience with Node.js, Express, and database design",
+      job_type: "Full-time",
+      location: "Remote",
+      salary: "$130,000 - $160,000",
+      posted_date: "2025-04-20",
+      job_category: "Development",
+      category_id: 1,
+      job_url: "https://example.com/jobs/backend-engineer"
+    },
+    {
+      job_id: 3,
+      title: "UX Designer",
+      description: "Help us create beautiful and intuitive user experiences for our products.",
+      requirements: "Portfolio showcasing UX design work, proficiency in Figma",
+      job_type: "Part-time",
+      location: "New York, NY",
+      salary: "$90,000 - $110,000",
+      posted_date: "2025-04-18",
+      job_category: "Design",
+      category_id: 2,
+      job_url: "https://example.com/jobs/ux-designer"
+    },
+    {
+      job_id: 4,
+      title: "DevOps Engineer",
+      description: "Manage our cloud infrastructure and CI/CD pipelines.",
+      requirements: "Experience with AWS, Docker, and Kubernetes",
+      job_type: "Full-time",
+      location: "Austin, TX",
+      salary: "$140,000 - $170,000",
+      posted_date: "2025-04-22",
+      job_category: "Operations",
+      category_id: 3,
+      job_url: "https://example.com/jobs/devops-engineer"
+    },
+    {
+      job_id: 5,
+      title: "Marketing Specialist",
+      description: "Drive our digital marketing campaigns and improve brand awareness.",
+      requirements: "Experience with digital marketing tools and analytics",
+      job_type: "Contract",
+      location: "Chicago, IL",
+      salary: "$80,000 - $100,000",
+      posted_date: "2025-04-25",
+      job_category: "Marketing",
+      category_id: 4,
+      job_url: "https://example.com/jobs/marketing-specialist"
+    }
+  ];
+  
+  export default initialJobs;
