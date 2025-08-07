@@ -34,10 +34,29 @@ services:
       - /usr/src/app/node_modules
     environment:
       - NODE_ENV=development
+      - DATABASE_URL=postgres://jobuser:jobpass@db:5432/joblistdb
     command: nodemon src/index.js
     networks:
       - joblist-network
     restart: unless-stopped
+
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_DB: joblistdb
+      POSTGRES_USER: jobuser
+      POSTGRES_PASSWORD: jobpass
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./node-testing/src/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    networks:
+      - joblist-network
+
+volumes:
+  pgdata:
 
 networks:
   joblist-network:

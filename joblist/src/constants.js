@@ -1,3 +1,3 @@
-const JOBS_URL = "http://localhost:3001";
+const JOBS_URL = "http://localhost:3001/jobs";
 
-export default JOBS_URL
+export default JOBS_URL;

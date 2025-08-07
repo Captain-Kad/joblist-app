@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Modal, Form, Button, Row, Col } from 'react-bootstrap';
+import axios from 'axios';
 
-const AddJobForm = ({ show, handleClose, addJob }) => {
+
+const AddJobForm = ({ show, handleClose }) => {
   const [newJob, setNewJob] = useState({
     title: '',
     description: '',
@@ -17,33 +19,36 @@ const AddJobForm = ({ show, handleClose, addJob }) => {
     setNewJob(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     // Create new job with generated fields
     const job = {
       ...newJob,
-      job_id: Date.now(),
       posted_date: new Date().toISOString().split('T')[0],
-      category_id: newJob.job_category === 'Development' ? 1 : 
-                  newJob.job_category === 'Design' ? 2 : 
+      category_id: newJob.job_category === 'Development' ? 1 :
+                  newJob.job_category === 'Design' ? 2 :
                   newJob.job_category === 'Operations' ? 3 : 4,
       job_url: `https://example.com/jobs/${newJob.title.toLowerCase().replace(/\s+/g, '-')}`
     };
     
-    addJob(job);
-    handleClose();
-    
-    // Reset form
-    setNewJob({
-      title: '',
-      description: '',
-      requirements: '',
-      job_type: 'Full-time',
-      location: '',
-      salary: '',
-      job_category: 'Development',
-    });
+    try {
+      await axios.post("http://localhost:3001/jobs", job);
+      alert("Job posted successfully!");
+      handleClose();
+      setNewJob({
+        title: '',
+        description: '',
+        requirements: '',
+        job_type: 'Full-time',
+        location: '',
+        salary: '',
+        job_category: 'Development',
+      });
+    } catch (error) {
+      console.error("Failed to post job:", error);
+      alert("There was a problem submitting the job.");
+    }
   };
 
   return (
