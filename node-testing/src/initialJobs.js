@@ -66,7 +66,7 @@ const initialJobs = [
   },
     {
       job_id: 6,
-      title: "Frontend Developer",
+      title: "Backend Developer",
       description: "We're looking for an experienced Frontend Developer to join our team and help build amazing user interfaces.",
       requirements: "3+ years experience with React, JavaScript, HTML/CSS",
       job_type: "Full-time",
