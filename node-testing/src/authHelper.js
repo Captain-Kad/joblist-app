@@ -1,6 +1,7 @@
 import pool from './db.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { v4 as uuidv4 } from 'uuid';
 
 const SALT_ROUNDS = 10;
 const JWT_EXPIRES_IN = '7d'; // adjust as needed
@@ -21,11 +22,15 @@ export const registerUser = async (req, res) => {
 
     const password_hash = await bcrypt.hash(password, SALT_ROUNDS);
 
+    // 🔹 Generate UUID for the new user
+    const user_id = uuidv4();
+
+    // 🔹 Insert with explicit user_id (UUID)
     const result = await pool.query(
-      `INSERT INTO users (first_name, last_name, email, password_hash)
-       VALUES ($1,$2,$3,$4)
+      `INSERT INTO users (user_id, first_name, last_name, email, password_hash)
+       VALUES ($1,$2,$3,$4,$5)
        RETURNING user_id, first_name, last_name, email`,
-      [first_name, last_name, email, password_hash]
+      [user_id, first_name, last_name, email, password_hash]
     );
 
     // Issue token

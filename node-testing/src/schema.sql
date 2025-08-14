@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS jobs (
 
 -- Users table for auth
 CREATE TABLE IF NOT EXISTS users (
-  user_id SERIAL PRIMARY KEY,
+  user_id UUID PRIMARY KEY,
   first_name TEXT NOT NULL,
   last_name  TEXT NOT NULL,
   email      TEXT UNIQUE NOT NULL,
