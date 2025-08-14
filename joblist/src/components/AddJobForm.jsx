@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Form, Button, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
+import { useAuth } from '../contexts/AuthContext';
 
 
 const AddJobForm = ({ show, handleClose }) => {
@@ -19,6 +20,8 @@ const AddJobForm = ({ show, handleClose }) => {
     setNewJob(prev => ({ ...prev, [name]: value }));
   };
 
+  const { token } = useAuth();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -33,7 +36,11 @@ const AddJobForm = ({ show, handleClose }) => {
     };
     
     try {
-      await axios.post("http://localhost:3001/jobs", job);
+      await axios.post("http://localhost:3001/jobs", job, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       alert("Job posted successfully!");
       handleClose();
       setNewJob({

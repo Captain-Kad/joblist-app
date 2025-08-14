@@ -35,6 +35,7 @@ services:
     environment:
       - NODE_ENV=development
       - DATABASE_URL=postgres://jobuser:jobpass@db:5432/joblistdb
+      - JWT_SECRET=supersecret_change_me
     command: nodemon src/index.js
     networks:
       - joblist-network
@@ -50,8 +51,8 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data
-      - ./node-testing/src/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+      - ./pgdata:/var/lib/postgresql/data
+      - ./node-testing/src/schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro
     networks:
       - joblist-network
 

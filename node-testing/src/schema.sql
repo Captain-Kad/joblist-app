@@ -11,3 +11,14 @@ CREATE TABLE IF NOT EXISTS jobs (
   category_id INT,
   job_url TEXT
 );
+
+-- Users table for auth
+CREATE TABLE IF NOT EXISTS users (
+  user_id SERIAL PRIMARY KEY,
+  first_name TEXT NOT NULL,
+  last_name  TEXT NOT NULL,
+  email      TEXT UNIQUE NOT NULL,
+  password_hash TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+

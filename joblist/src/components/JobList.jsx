@@ -12,6 +12,7 @@ import axios from "axios";
 import JobCard from "./JobCard";
 import JobFilter from "./JobFilter";
 import AddJobForm from "./AddJobForm";
+import { useAuth } from "../contexts/AuthContext";
 
 // Number of jobs to show per page
 const JOBS_PER_PAGE = 5;
@@ -42,22 +43,26 @@ const JobList = () => {
   // Loading state while fetching jobs
   const [loading, setLoading] = useState(true);
 
+  const { token } = useAuth();
+
   // ⬇️ Fetch jobs from the backend API on initial render
   useEffect(() => {
-    const fetchJobs = async () => {
-      try {
-        const res = await axios.get("http://localhost:3001/jobs");
-        setJobs(res.data);           // Save full job list
-        setFilteredJobs(res.data);   // Also initialize filtered list
-        setLoading(false);           // Stop loading spinner
-      } catch (err) {
-        console.error("Failed to fetch jobs:", err);
-        setLoading(false);
-      }
-    };
+  const fetchJobs = async () => {
+    try {
+      const res = await axios.get("http://localhost:3001/jobs", {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setJobs(res.data);
+      setFilteredJobs(res.data);
+    } catch (err) {
+      console.error("Failed to fetch jobs:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    fetchJobs();
-  }, []);
+  if (token) fetchJobs();           // only fetch after login
+}, [token]);                         // refetch when token changes
 
   // ⬇️ Apply filters and search term whenever input or job list changes
   useEffect(() => {
