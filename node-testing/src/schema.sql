@@ -1,5 +1,8 @@
+-- Enable UUID extension (only runs once)
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 CREATE TABLE IF NOT EXISTS jobs (
-  job_id SERIAL PRIMARY KEY,
+  job_id UUID PRIMARY KEY,
   title TEXT NOT NULL,
   description TEXT,
   requirements TEXT,
@@ -21,4 +24,3 @@ CREATE TABLE IF NOT EXISTS users (
   password_hash TEXT NOT NULL,
   created_at TIMESTAMP DEFAULT NOW()
 );
-

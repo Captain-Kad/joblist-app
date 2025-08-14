@@ -1,4 +1,5 @@
 import pool from './db.js';
+import { v4 as uuidv4 } from 'uuid';
 
 export const getAllJobs = async (req, res) => {
   try {
@@ -17,13 +18,14 @@ export const postNewJob = async (req, res) => {
   } = req.body;
 
   const posted_date = new Date().toISOString().split('T')[0];
+  const job_id = uuidv4(); // 🔹 generate UUID
 
   try {
     const result = await pool.query(
       `INSERT INTO jobs 
-      (title, description, requirements, job_type, location, salary, posted_date, job_category, category_id, job_url)
-      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *`,
-      [title, description, requirements, job_type, location, salary, posted_date, job_category, category_id, job_url]
+      (job_id, title, description, requirements, job_type, location, salary, posted_date, job_category, category_id, job_url)
+      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *`,
+      [job_id, title, description, requirements, job_type, location, salary, posted_date, job_category, category_id, job_url]
     );
     res.status(201).json(result.rows[0]);
   } catch (err) {
