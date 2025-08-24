@@ -22,5 +22,6 @@ CREATE TABLE IF NOT EXISTS users (
   last_name  TEXT NOT NULL,
   email      TEXT UNIQUE NOT NULL,
   password_hash TEXT NOT NULL,
-  created_at TIMESTAMP DEFAULT NOW()
+  created_at TIMESTAMP DEFAULT NOW(),
+  resume_url TEXT
 );

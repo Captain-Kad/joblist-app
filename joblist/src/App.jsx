@@ -1,8 +1,8 @@
 import "./styles/App.css";
 import React from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap-icons/font/bootstrap-icons.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Header from "./components/Header";
 import JobList from "./components/JobList";
@@ -14,6 +14,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AuthProvider from "./contexts/AuthContext";
+import ResumeUpload from "./components/ResumeUpload";
 
 function App() {
   return (
@@ -32,6 +33,17 @@ function App() {
             />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <div className="container py-4">
+                    <h2 className="text-white mb-3">Profile</h2>
+                    <ResumeUpload></ResumeUpload>
+                  </div>
+                </ProtectedRoute>
+              }
+            />
           </Routes>
           <Footer />
         </div>

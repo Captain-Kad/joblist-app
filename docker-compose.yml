@@ -32,6 +32,7 @@ services:
     volumes:
       - ./node-testing:/usr/src/app
       - /usr/src/app/node_modules
+      - ./node-testing/uploads:/usr/src/app/uploads
     environment:
       - NODE_ENV=development
       - DATABASE_URL=${DATABASE_URL}

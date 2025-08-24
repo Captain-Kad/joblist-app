@@ -2,18 +2,23 @@
 import initialJobs from './initialJobs.js';
 import express from 'express';
 import cors from 'cors';
+import path from 'path';
 import cookieParser from 'cookie-parser';
 import pool from './db.js';
 import bodyParser from 'body-parser';
 import { getAllJobs, postNewJob } from './jobHelper.js';
 import { registerUser, loginUser } from './authHelper.js';
 import { requireAuth } from './authMiddleware.js';
+import uploadRoutes from './uploads.js';
 
 // var express = require('express');
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+app.use('/uploads', express.static(path.resolve('uploads'))); // GET files
+app.use('/uploads', requireAuth, uploadRoutes); // we import requireAuth inside uploads.js now
 
 app.get('/', function (req, res) {
     const jobList = initialJobs;
@@ -31,6 +36,8 @@ app.post('/register', function (req, res) {
 // Public auth routes
 app.post('/auth/register', registerUser);
 app.post('/auth/login', loginUser);
+
+app.use('/uploads', requireAuth, uploadRoutes);
 
 // Protected job routes (require login)
 app.get('/jobs', requireAuth, getAllJobs);
