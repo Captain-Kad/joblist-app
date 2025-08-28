@@ -1,9 +1,11 @@
-import pool from './db.js';
-import { v4 as uuidv4 } from 'uuid';
+import pool from "./db.js";
+import { v4 as uuidv4 } from "uuid";
 
 export const getAllJobs = async (req, res) => {
   try {
-    const result = await pool.query('SELECT * FROM jobs ORDER BY posted_date DESC');
+    const result = await pool.query(
+      "SELECT * FROM jobs ORDER BY posted_date DESC"
+    );
     res.json(result.rows);
   } catch (err) {
     console.error("Database error in GET /jobs:", err);
@@ -13,11 +15,18 @@ export const getAllJobs = async (req, res) => {
 
 export const postNewJob = async (req, res) => {
   const {
-    title, description, requirements, job_type,
-    location, salary, job_category, category_id, job_url
+    title,
+    description,
+    requirements,
+    job_type,
+    location,
+    salary,
+    job_category,
+    category_id,
+    job_url,
   } = req.body;
 
-  const posted_date = new Date().toISOString().split('T')[0];
+  const posted_date = new Date().toISOString().split("T")[0];
   const job_id = uuidv4(); // 🔹 generate UUID
 
   try {
@@ -25,11 +34,41 @@ export const postNewJob = async (req, res) => {
       `INSERT INTO jobs 
       (job_id, title, description, requirements, job_type, location, salary, posted_date, job_category, category_id, job_url)
       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *`,
-      [job_id, title, description, requirements, job_type, location, salary, posted_date, job_category, category_id, job_url]
+      [
+        job_id,
+        title,
+        description,
+        requirements,
+        job_type,
+        location,
+        salary,
+        posted_date,
+        job_category,
+        category_id,
+        job_url,
+      ]
     );
     res.status(201).json(result.rows[0]);
   } catch (err) {
     console.error("Database error in POST /jobs:", err);
     res.status(500).send("Error creating job: " + err.message);
+  }
+};
+
+export const getJobById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await pool.query("SELECT * FROM jobs WHERE job_id = $1", [
+      id,
+    ]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: "Job not found" });
+    }
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error("Database error in GET /jobs/:id:", err);
+    res.status(500).send("Database error: " + (err.message || err));
   }
 };

@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Header from "./components/Header";
 import JobList from "./components/JobList";
+import JobDetail from "./pages/JobDetail";
 import Footer from "./components/Footer";
 
 // If you created these in components/, keep paths below.
@@ -28,6 +29,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <JobList />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/jobs/:id"
+              element={
+                <ProtectedRoute>
+                  <JobDetail></JobDetail>
                 </ProtectedRoute>
               }
             />

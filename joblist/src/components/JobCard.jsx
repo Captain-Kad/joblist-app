@@ -1,12 +1,13 @@
-import React from 'react';
-import { Card, Row, Col, Button } from 'react-bootstrap';
-import JobTypeBadge from './JobTypeBadge';
+import React from "react";
+import { Card, Row, Col, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import JobTypeBadge from "./JobTypeBadge";
 
 const JobCard = ({ job }) => {
-  const formattedDate = new Date(job.posted_date).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric'
+  const formattedDate = new Date(job.posted_date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
   });
 
   return (
@@ -14,7 +15,14 @@ const JobCard = ({ job }) => {
       <Card.Body className="p-4">
         <Row>
           <Col md={8}>
-            <Card.Title className="fs-4 fw-bold mb-3">{job.title}</Card.Title>
+            <Card.Title className="fs-4 fw-bold mb-3">
+              <Link
+                to={`/jobs/${job.job_id}`}
+                className="text-decoration-none text-dark"
+              >
+                {job.title}
+              </Link>
+            </Card.Title>
             <div className="d-flex flex-wrap align-items-center mb-3 gap-3">
               <div className="d-flex align-items-center text-muted">
                 <i className="bi bi-geo-alt me-1"></i>
@@ -39,8 +47,8 @@ const JobCard = ({ job }) => {
             </div>
           </Col>
         </Row>
-        
-        <Card.Text className="my-3">
+
+        {/* <Card.Text className="my-3">
           {job.description}
         </Card.Text>
         
@@ -60,6 +68,12 @@ const JobCard = ({ job }) => {
             variant="primary"
           >
             Apply Now
+          </Button>
+        </div> */}
+        <div className="d-flex justify-content-between align-items-center mt-4">
+          <span className="badge bg-light text-dark">{job.job_category}</span>
+          <Button as={Link} to={`/jobs/${job.job_id}`} variant="primary">
+            View Details
           </Button>
         </div>
       </Card.Body>
